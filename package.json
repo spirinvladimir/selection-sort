@@ -1,0 +1,18 @@
+{
+  "name": "selection-sort",
+  "description": "Selection sort in WebAssembly",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spirinvladimir/selection-sort.git"
+  },
+  "scripts": {
+    "build": "npx wat2wasm main.wat",
+    "start": "npx serve",
+    "test": "mocha"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "6.2.2"
+  }
+}

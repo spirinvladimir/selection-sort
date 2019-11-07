@@ -1,0 +1,12 @@
+[package]
+name = "spirinvladimir/selection-sort"
+version = "1.0.0"
+description = "Selection sort in WebAssembly"
+readme = "README.md"
+repository = "https://github.com/spirinvladimir/selection-sort"
+homepage = "http://spirintravels.com/selection-sort"
+license = "ISC"
+
+[[module]]
+name = "selection-sort"
+source = "main.wasm"
