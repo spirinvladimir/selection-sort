@@ -1,6 +1,7 @@
 var fs = require('fs')
 var mem
 var main
+var selection_sort
 var f64a
 
 module.exports = () =>
@@ -10,7 +11,7 @@ module.exports = () =>
                 ? n(error)
                 : WebAssembly.instantiate(_, {js: {mem}})
                     .then(_ => {
-                        sort = _.instance.exports.sort
+                        selection_sort = _.instance.exports.selection_sort
                         y(main)
                     })
         )
@@ -19,11 +20,11 @@ module.exports = () =>
     })
 
 function main (array) {
-    //return array.sort()
     var i = 0
     const sorted = new Array(array.length)
+    if (array.length === 1) return array.copyWithin()
     while (i < array.length) f64a[i] = array[i++]
-    sort(i)
+    selection_sort(i)
     while (i--) sorted[i] = f64a[i]
     return sorted
 }

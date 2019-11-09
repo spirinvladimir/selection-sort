@@ -1,43 +1,55 @@
 (module
     (memory (import "js" "mem") 1)
-    (func $sort (param $count i32) (result f64)
-        (local $i i32)
-        (local $price f64)
-        (local $sum f64)
-        (local $order_price f64)
-        (local $order_amount f64)
-        (set_local $i (i32.const 0))
-        (set_local $price (f64.const 0))
-        (set_local $sum (f64.const 0))
+    (func $selection_sort (param $count i32) (result i32)
+        (local $val_index i32)
+        (local $last_index i32)
+        (local $min_index i32)
+        (local $last_sorted_index i32)
+        (local $min f64)
+        (local $val f64)
+        (local $tmp f64)
+        (local $swap_a_adress i32)
+        (local $swap_b_adress i32)
+        (set_local $last_index (i32.sub (get_local $count) (i32.const 1)))
+        (set_local $last_sorted_index (i32.const 0))
+        (set_local $val_index (i32.const 0))
+        (set_local $min_index (i32.const 0))
+        (set_local $min (f64.load (i32.const 0)))
         (block $done
             (loop $loop
-                (set_local
-                    $order_price
-                    (f64.load
-                        (i32.mul
-                            (i32.mul (get_local $i) (i32.const 2))
-                            (i32.const 8))))
-                (set_local
-                    $order_amount
-                    (f64.load
-                        (i32.mul
-                            (i32.add (i32.const 1) (i32.mul (get_local $i) (i32.const 2)))
-                            (i32.const 8))))
-                (set_local $price (get_local $order_price))
-                (set_local $sum (f64.add (get_local $sum) (get_local $order_amount)))
-                (set_local $i (i32.add (get_local $i) (i32.const 1)))
-                (br_if $done (f64.ge (get_local $sum) (get_local $amount)))
-                (br_if $done (i32.eq (get_local $i) (get_local $count)))
+                (set_local $val_index (if (result i32)
+                    (i32.eq (get_local $val_index) (get_local $last_index))
+                        (then
+                            (set_local $swap_a_adress
+                                (i32.mul
+                                    (get_local $last_sorted_index)
+                                    (i32.const 8)))
+                            (set_local $swap_b_adress
+                                (i32.mul
+                                    (get_local $min_index)
+                                    (i32.const 8)))
+                            (set_local $tmp (f64.load (get_local $swap_a_adress)))
+                            (set_local $min (f64.load (get_local $swap_b_adress)))
+                            (f64.store (get_local $swap_a_adress) (get_local $min))
+                            (f64.store (get_local $swap_b_adress) (get_local $tmp))
+                            (set_local $last_sorted_index (i32.add (get_local $last_sorted_index) (i32.const 1)))
+                            (set_local $min_index (get_local $last_sorted_index))
+                            (set_local $min (f64.load (i32.mul (get_local $min_index) (i32.const 8))))
+                            (br_if $done (i32.eq (get_local $last_sorted_index) (get_local $last_index)))
+                            (i32.add (get_local $last_sorted_index) (i32.const 1))
+                        )
+                        (else
+                            (i32.add (get_local $val_index) (i32.const 1)))))
+                (set_local $val (f64.load (i32.mul (get_local $val_index) (i32.const 8))))
+                (set_local $min_index (if (result i32)
+                    (f64.lt (get_local $val) (get_local $min))
+                        (then
+                            (set_local $min (f64.load (i32.mul (get_local $val_index) (i32.const 8))))
+                            (get_local $val_index)
+                        )
+                        (else (get_local $min_index))))
                 (br $loop)))
-        (if (result f64)
-            (f64.lt (get_local $sum) (get_local $amount))
-            (f64.const 0)
-            (get_local $price))
+        (get_local $count)
     )
-    (func $div (param $a f64) (param $b f64) (result f64)
-        (f64.div
-            (get_local $a)
-            (get_local $b)))
-    (export "div" (func $div))
-    (export "sort" (func $sort))
+    (export "selection_sort" (func $selection_sort))
 )
