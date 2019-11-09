@@ -56,4 +56,27 @@ describe('Selection sort', () => {
                 )
             )
     )
+    const n = 8192
+    describe(n + ' points from sin()', () => {
+        const sin = Array(n).fill(Math.PI).map((x, i) => Math.sin(i * x / n)).map(x => x.toFixed(4))
+        const cos = Array(n).fill(Math.PI).map((x, i) => Math.cos(i * x / n)).map(x => x.toFixed(4))
+        it('sin()', () =>
+            selection_sort()
+                .then(sort =>
+                    assert.deepEqual(
+                        sort(sin),
+                        sin.sort((a, b) => a - b)
+                    )
+            )
+        )
+        it('cos()', () =>
+            selection_sort()
+                .then(sort =>
+                    assert.deepEqual(
+                        sort(cos),
+                        cos.sort((a, b) => a - b)
+                    )
+            )
+        )
+    })
 })
