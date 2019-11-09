@@ -1,8 +1,4 @@
-var fs = require('fs')
-var mem
-var main
-var selection_sort
-var f64a
+var fs = require('fs'), mem, main, selection_sort, f64a
 
 module.exports = () =>
     new Promise((y, n) => {
@@ -15,7 +11,7 @@ module.exports = () =>
                         y(main)
                     })
         )
-        mem = new WebAssembly.Memory({initial: 1, maximum: 10})
+        mem = new WebAssembly.Memory({initial: 1})
         f64a = new Float64Array(mem.buffer)
     })
 
