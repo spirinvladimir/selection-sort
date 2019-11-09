@@ -40,19 +40,8 @@ describe('Selection sort', () => {
     )
     const n = 8192
     describe('Max array length ' + n, () => {
-        const sin = Array(n).fill(Math.PI).map((x, i) => Math.sin(i * x / n)).map(x => x.toFixed(5))
         const cos = Array(n).fill(Math.PI).map((x, i) => Math.cos(i * x / n)).map(x => x.toFixed(5))
-        const sin_sorted = sin.sort((a, b) => a - b)
         const cos_sorted = cos.sort((a, b) => a - b)
-        it('sin()', () =>
-            selection_sort()
-                .then(sort =>
-                    assert.deepEqual(
-                        sort(sin),
-                        sin_sorted
-                    )
-            )
-        )
         it('cos()', () =>
             selection_sort()
                 .then(sort =>
