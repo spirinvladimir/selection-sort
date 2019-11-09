@@ -20,24 +20,6 @@ describe('Selection sort', () => {
                 )
             )
     )
-    it('should sort numbers [5,4,3,2,1]', () =>
-        selection_sort()
-            .then(sort =>
-                assert.deepEqual(
-                    sort([5, 4, 3, 2, 1]),
-                    [1, 2, 3, 4, 5]
-                )
-            )
-    )
-    it('should sort numbers [0,5,4,3,2,1]', () =>
-        selection_sort()
-            .then(sort =>
-                assert.deepEqual(
-                    sort([0, 5, 4, 3, 2, 1]),
-                    [0, 1, 2, 3, 4, 5]
-                )
-            )
-    )
     it('should sort two elements [5,4]', () =>
         selection_sort()
             .then(sort =>
